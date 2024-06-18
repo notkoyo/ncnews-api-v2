@@ -2,7 +2,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { prettyJSON } from "hono/pretty-json";
-import { main, users, topics, articles, comments } from "@/routes/all";
+import { main, users, topics, articles, comments } from "@/api/routes/all";
 
 const api = new Hono().basePath("/api/v2");
 
