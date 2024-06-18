@@ -1,22 +1,52 @@
 {
-  "/api/v2/status": {
+  "1": {
     "method": "GET",
+    "route": "/api/v2/status",
     "description": "Check the current online/offline status of the API."
   },
-  "/api/v2/endpoints": {
+  "2": {
     "method": "GET",
+    "route": "/api/v2/endpoints",
     "description": "Return all current available endpoints to the API."
   },
-  "/api/v2/users": {
+  "3": {
     "method": "GET",
+    "route": "/api/v2/users",
     "description": "Return all users from the database."
   },
-  "/api/v2/topics": {
+  "4": {
     "method": "GET",
+    "route": "/api/v2/topics",
     "description": "Return all topics from the database."
   },
-  "/api/v2/articles": {
+  "5": {
     "method": "GET",
+    "route": "/api/v2/articles",
     "description": "Return all articles from the database."
+  },
+  "6": {
+    "method": "GET",
+    "route": "/api/v2/articles/:article_id",
+    "description": "Return an article by article ID from the database."
+  },
+  "7": {
+    "method": "GET",
+    "route": "/api/v2/articles/:article_id/comments",
+    "description": "Return all comments from article by article ID from the database."
+  },
+  "8": {
+    "method": "POST",
+    "route": "/api/v2/articles/:article_id/comments",
+    "description": "Create a new comment for the article by article ID."
+  },
+  "9": {
+    "method": "PATCH",
+    "route": "/api/v2/articles/:article_id",
+    "description": "Update an article by article ID."
+  },
+  "10": {
+    "method": "DELETE",
+    "route": "/api/v2/comments/:comment_id",
+    "description": "Delete a comment by comment ID."
   }
 }

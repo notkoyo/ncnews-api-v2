@@ -1,9 +1,8 @@
+import { deleteCommentByCommentId } from "@/model";
 import { Hono } from "hono";
 
 const comments = new Hono();
 
-comments.delete("/api/v2/comments/:comment_id", (c) =>
-  c.json({ comment: "Deleted Comment" })
-);
+comments.delete("/comments/:comment_id", (c) => deleteCommentByCommentId(c));
 
 export default comments;
