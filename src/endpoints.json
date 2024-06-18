@@ -1,0 +1,22 @@
+{
+  "/api/v2/status": {
+    "method": "GET",
+    "description": "Check the current online/offline status of the API."
+  },
+  "/api/v2/endpoints": {
+    "method": "GET",
+    "description": "Return all current available endpoints to the API."
+  },
+  "/api/v2/users": {
+    "method": "GET",
+    "description": "Return all users from the database."
+  },
+  "/api/v2/topics": {
+    "method": "GET",
+    "description": "Return all topics from the database."
+  },
+  "/api/v2/articles": {
+    "method": "GET",
+    "description": "Return all articles from the database."
+  }
+}
