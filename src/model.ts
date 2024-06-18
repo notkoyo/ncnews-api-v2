@@ -5,17 +5,11 @@ import { users, topics, articles, comments } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { Endpoints } from "./api";
 
-const fetchEndpoints = async () => {
+const fetchEndpoints = async (c: Context) => {
   const endpoints = await fs.readFile("./src/endpoints.json", "utf-8");
   const parsedEndpoints: Endpoints = JSON.parse(endpoints);
 
-  const endpointArray = Object.keys(parsedEndpoints).map(key => ({
-    endpoint: parsedEndpoints[key].route,
-    method: parsedEndpoints[key].method,
-    description: parsedEndpoints[key].description
-  }));
-
-  return endpointArray;
+  return c.json(parsedEndpoints);
 };
 
 const fetchUsers = async (c: Context) => {
