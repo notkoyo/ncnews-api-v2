@@ -1,4 +1,4 @@
-import { fetchUsers } from "@/api/mvc";
+import { fetchUsers } from "@/model";
 import { Hono } from "hono";
 
 const users = new Hono();

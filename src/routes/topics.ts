@@ -1,4 +1,4 @@
-import { fetchTopics } from "@/api/mvc";
+import { fetchTopics } from "@/model";
 import { Hono } from "hono";
 
 const topics = new Hono();

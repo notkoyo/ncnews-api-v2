@@ -1,4 +1,4 @@
-import { fetchEndpoints } from "@/api/mvc";
+import { fetchEndpoints } from "@/model";
 import { Hono } from "hono";
 
 const main = new Hono();

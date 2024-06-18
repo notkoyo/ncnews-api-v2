@@ -1,15 +1,20 @@
-import { fetchArticles } from "@/api/mvc";
+import {
+  fetchArticles,
+  fetchArticlesById,
+  fetchCommentsByArticleId,
+  postCommentByArticleId,
+} from "@/model";
 import { Hono } from "hono";
 
 const articles = new Hono();
 
 articles.get("/articles", (c) => fetchArticles(c));
-articles.get("/articles/:article_id", (c) => c.json({ articles: 1 }));
+articles.get("/articles/:article_id", (c) => fetchArticlesById(c));
 articles.get("/articles/:article_id/comments", (c) =>
-  c.json({ comments: 1 })
+  fetchCommentsByArticleId(c)
 );
 articles.post("/articles/:article_id/comments", (c) =>
-  c.json({ comments: 1 })
+  postCommentByArticleId(c)
 );
 articles.patch("/articles/:article_id", (c) => c.json({ articles: 1 }));
 
