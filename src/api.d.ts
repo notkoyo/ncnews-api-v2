@@ -33,3 +33,15 @@ export type Comments = {
   votes: number,
   created_at: string,
 }
+
+export type Users = {
+  username: string,
+  first_name: string,
+  last_name: string,
+  avatar_url: string,
+}
+
+export type Topics = {
+  slug: string,
+  description: string,
+}

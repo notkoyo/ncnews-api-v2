@@ -1,6 +1,6 @@
 import { api, server } from "@/index";
 import * as fs from "fs/promises";
-import { Endpoints, Articles, Comments } from "@/api";
+import { Endpoints, Articles, Comments, Users, Topics } from "@/api";
 
 afterAll(() => server.close());
 
@@ -34,7 +34,7 @@ describe("GET", () => {
   describe("/users", () => {
     it("should return json object with all users in database", async () => {
       const res = await api.request("/api/v2/users");
-      const users: Object[] = await res.json();
+      const users: Users[] = await res.json();
       expect(users.length).toBeGreaterThan(0);
       users.forEach((user) => {
         expect(Object.keys(user).length).toBe(4);
@@ -52,7 +52,7 @@ describe("GET", () => {
   describe("/topics", () => {
     it("should return json object with all topics in database", async () => {
       const res = await api.request("/api/v2/topics");
-      const topics: Object[] = await res.json();
+      const topics: Topics[] = await res.json();
       expect(topics.length).toBeGreaterThan(0);
       topics.forEach((topic) => {
         expect(Object.keys(topic).length).toBe(2);
