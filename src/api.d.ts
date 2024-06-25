@@ -13,3 +13,23 @@ export type Endpoint = {
   method: string;
   description: string;
 };
+
+export type Articles = {
+  article_id: number,
+  title: string,
+  topic: string,
+  author: string,
+  body: string,
+  created_at: string,
+  votes: number,
+  article_img_url: string,
+}
+
+export type Comments = {
+  comment_id: number,
+  body: string,
+  article_id: number,
+  author: string,
+  votes: number,
+  created_at: string,
+}

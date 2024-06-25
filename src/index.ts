@@ -28,9 +28,9 @@ api.route("/", comments);
 const port = 8080;
 console.log(`Server is running on port ${port}`);
 
-serve({
+const server = serve({
   fetch: api.fetch,
   port,
 });
 
-export default api;
+export { api, server };

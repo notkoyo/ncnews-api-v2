@@ -38,7 +38,12 @@ const fetchArticlesById = async (c: Context) => {
       .from(articles)
       .where(eq(articles.article_id, id));
 
-    return c.json(allArticlesById);
+    if (allArticlesById.length > 0) {
+      return c.json(allArticlesById);
+    } else {
+      c.status(404);
+      return c.json({ Error: "Article not found." });
+    }
   } catch (error) {
     console.error(error);
   }
@@ -52,7 +57,12 @@ const fetchCommentsByArticleId = async (c: Context) => {
       .from(comments)
       .where(eq(comments.article_id, id));
 
-    return c.json(allCommentsById);
+    if (allCommentsById.length > 0) {
+      return c.json(allCommentsById);
+    } else {
+      c.status(404);
+      return c.json({ Error: "No comments found." });
+    }
   } catch (error) {
     console.error(error);
   }
