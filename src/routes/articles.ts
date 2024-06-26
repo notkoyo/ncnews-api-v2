@@ -3,6 +3,7 @@ import {
   fetchArticlesById,
   fetchCommentsByArticleId,
   postCommentByArticleId,
+  updateArticleById,
 } from "@/model";
 import { Hono } from "hono";
 
@@ -16,6 +17,6 @@ articles.get("/articles/:article_id/comments", (c) =>
 articles.post("/articles/:article_id/comments", (c) =>
   postCommentByArticleId(c)
 );
-articles.patch("/articles/:article_id", (c) => c.json({ articles: 1 }));
+articles.patch("/articles/:article_id", (c) => updateArticleById(c));
 
 export default articles;

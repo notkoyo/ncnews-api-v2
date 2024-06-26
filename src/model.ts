@@ -3,7 +3,7 @@ import * as fs from "fs/promises";
 import { Context } from "hono";
 import { users, topics, articles, comments } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { Endpoints } from "./api";
+import { Articles, Endpoints } from "./api";
 
 const fetchEndpoints = async (c: Context) => {
   const endpoints = await fs.readFile("./src/endpoints.json", "utf-8");
@@ -109,6 +109,28 @@ const deleteCommentByCommentId = async (c: Context) => {
   }
 };
 
+const updateArticleById = async (c: Context) => {
+  try {
+    const article_id: number = Number(c.req.param("article_id"));
+    const body: {
+      title?: string;
+      body?: string;
+      article_img_url?: string;
+    } = await c.req.json();
+
+    const updatedArticle = await db
+      .update(articles)
+      .set(body)
+      .where(eq(articles.article_id, article_id))
+      .returning();
+
+    c.status(200);
+    return c.json(updatedArticle);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export {
   fetchUsers,
   fetchEndpoints,
@@ -118,4 +140,5 @@ export {
   fetchCommentsByArticleId,
   postCommentByArticleId,
   deleteCommentByCommentId,
+  updateArticleById,
 };

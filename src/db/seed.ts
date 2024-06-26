@@ -58,7 +58,7 @@ import timestampToDate from "@/utils/timestampToDate";
       )
     );
 
-    console.log("Database seeded successfully.");
+    console.log("Seeded database successfully.");
   } catch (error) {
     console.error(error);
   }

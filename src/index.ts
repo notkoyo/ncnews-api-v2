@@ -3,11 +3,6 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { prettyJSON } from "hono/pretty-json";
 import { main, users, topics, articles, comments } from "@/routes/all";
-import { config } from "dotenv";
-import { ExtendedEnv } from "./api";
-config();
-
-const { PORT } = process.env as ExtendedEnv;
 
 const api = new Hono().basePath("/api/v2");
 
@@ -30,11 +25,12 @@ api.route("/", articles);
 api.route("/", comments);
 
 // Server
-console.log(`Server is running on port ${PORT}`);
+const port = 8080;
+console.log(`Server is running on port ${port}`);
 
 const server = serve({
   fetch: api.fetch,
-  port: PORT,
+  port,
 });
 
 export { api, server };

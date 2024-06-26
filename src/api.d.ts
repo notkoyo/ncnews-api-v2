@@ -1,8 +1,3 @@
-interface ExtendedEnv extends NodeJS.ProcessEnv {
-  PORT: number,
-  DATABASE_URL: string,
-}
-
 interface EndpointParams {
   method: string,
   route: string,

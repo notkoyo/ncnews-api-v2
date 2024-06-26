@@ -1,6 +1,7 @@
 import { api, server } from "@/index";
 import * as fs from "fs/promises";
 import { Endpoints, Articles, Comments, Users, Topics } from "@/api";
+import { execSync } from "child_process";
 
 afterAll(() => server.close());
 
@@ -154,6 +155,119 @@ describe("GET", () => {
     it("should return status code 404 if article does not exist or no comments available", async () => {
       const res = await api.request("/api/v2/articles/999/comments");
       expect(res.status).toBe(404);
+    });
+  });
+});
+
+describe("POST", () => {
+  describe("/articles/:id/comments", () => {
+    it("should return array of json object with comment that was added", async () => {
+      const comment = {
+        username: "tickle122",
+        body: "Even nicer article!",
+      };
+      const article_id: number = 5;
+
+      const res = await api.request(`/api/v2/articles/${article_id}/comments`, {
+        method: "POST",
+        body: JSON.stringify(comment),
+        headers: new Headers({ "Content-Type": "application/json" }),
+      });
+      const addedComment: Comments[] = await res.json();
+
+      expect(addedComment[0]).toHaveProperty("comment_id");
+      expect(addedComment[0].article_id).toEqual(article_id);
+      expect(addedComment[0].body).toEqual(comment.body);
+      expect(addedComment[0].author).toEqual(comment.username);
+    });
+    it("should return status code 201", async () => {
+      const comment = {
+        username: "tickle122",
+        body: "Even nicer article!",
+      };
+      const article_id: number = 6;
+
+      const res = await api.request(`/api/v2/articles/${article_id}/comments`, {
+        method: "POST",
+        body: JSON.stringify(comment),
+        headers: new Headers({ "Content-Type": "application/json" }),
+      });
+      expect(res.status).toBe(201);
+    });
+  });
+});
+
+describe("PATCH", () => {
+  describe("/articles/:id", () => {
+    it("should return the modified article", async () => {
+      const body = {
+        title: "This title was changed",
+      }
+      const res = await api.request("/api/v2/articles/4", {
+        method: "PATCH",
+        body: JSON.stringify(body),
+        headers: new Headers({ "Content-Type": "application/json" }),
+      })
+      const updatedArticle = await res.json();
+      expect(updatedArticle[0].title).toEqual(body.title);
+    });
+    it("should return status code 200", async () => {
+      const body = {
+        title: "This title was changed again",
+      }
+      const res = await api.request("/api/v2/articles/4", {
+        method: "PATCH",
+        body: JSON.stringify(body),
+        headers: new Headers({ "Content-Type": "application/json" }),
+      });
+      expect(res.status).toBe(200);
+    });
+  });
+});
+
+describe("DELETE", () => {
+  describe("/comments/:id", () => {
+    it("should return json object with deleted comment, author and ID", async () => {
+      const comment = {
+        username: "tickle122",
+        body: "Even nicer article!",
+      };
+      const article_id: number = 7;
+      const commentCreated = await api.request(`/api/v2/articles/${article_id}/comments`, {
+        method: "POST",
+        body: JSON.stringify(comment),
+        headers: new Headers({ "Content-Type": "application/json" }),
+      });
+      const json: Comments[] = await commentCreated.json();
+      
+      const comment_id: number = json[0].comment_id;
+      const res = await api.request(`/api/v2/comments/${comment_id}`, {
+        method: "DELETE",
+      });
+      const deletedComment = await res.json();
+      expect(deletedComment).toHaveProperty("message");
+      expect(deletedComment).toHaveProperty("comment");
+      expect(deletedComment).toHaveProperty("author");
+      expect(deletedComment.message).toEqual(`Comment with ID: ${comment_id} deleted.`);
+    });
+    it("should return status code 200", async () => {
+      const comment = {
+        username: "tickle122",
+        body: "Even nicer article!",
+      };
+      const article_id: number = 7;
+      const commentCreated = await api.request(`/api/v2/articles/${article_id}/comments`, {
+        method: "POST",
+        body: JSON.stringify(comment),
+        headers: new Headers({ "Content-Type": "application/json" }),
+      });
+      const json: Comments[] = await commentCreated.json();
+      
+      const comment_id: number = json[0].comment_id;
+      const res = await api.request(`/api/v2/comments/${comment_id}`, {
+        method: "DELETE",
+      });
+      expect(res.status).toBe(202);
     });
   });
 });
